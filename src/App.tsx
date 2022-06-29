@@ -1,10 +1,12 @@
-import { ReactElement } from 'react';
+import { ReactElement, useState } from 'react';
 import { PlusIcon } from '@heroicons/react/solid';
 import { TodoList } from './components/TodoList';
 
 const App = (): ReactElement => {
+  const [showAddForm, setShowAddForm] = useState(false);
+
   return (
-    <div className="relative flex h-full w-full">
+    <div className="flex h-full w-full">
       <div className="w-8 bg-slate-600 p-6 text-white md:w-80 md:min-w-80">
         <h1 className="text-4xl">My TODO&apos;s</h1>
       </div>
@@ -16,14 +18,15 @@ const App = (): ReactElement => {
             src="/trees.jpg"
           />
         </div>
-        <div className="relative flex h-full justify-center bg-gray-100">
+        <div className="flex h-full justify-center bg-gray-100">
           <div className="-mt-20 w-3/4 self-start bg-white shadow-xl">
-            <TodoList />
+            <TodoList setShowAddForm={setShowAddForm} showAddForm={showAddForm} />
           </div>
           <div className="absolute bottom-8 right-8">
             <button
               className="rounded-full bg-slate-600 p-3 hover:font-semibold hover:shadow-lg"
               data-test-id="add-todo"
+              onClick={(): void => setShowAddForm(true)}
             >
               <PlusIcon className="h-8 w-8 text-white" />
             </button>
