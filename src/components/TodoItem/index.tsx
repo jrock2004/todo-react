@@ -19,7 +19,7 @@ export const TodoItem = ({ handleTodoDelete, item, setTodo }: TTodoItemProps): R
 
   return (
     <div className="flex flex-row items-center gap-4 border-b border-b-gray-200 p-4">
-      <div>
+      <div className="flex w-full items-center gap-4">
         <input
           checked={item.completed}
           className="h-4 w-4 rounded border-gray-300 text-slate-600 focus:ring-2 focus:ring-slate-500"
@@ -28,11 +28,10 @@ export const TodoItem = ({ handleTodoDelete, item, setTodo }: TTodoItemProps): R
           type="checkbox"
           onChange={handleTodoChange}
         />
-        <label className="sr-only" htmlFor={`todo-${item.id}`}>
+        <label className="block w-full hover:cursor-pointer" htmlFor={`todo-${item.id}`}>
           {item.title}
         </label>
       </div>
-      <span>{item.title}</span>
       <button
         className="ml-auto"
         data-test-id="todo-item-delete"
