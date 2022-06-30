@@ -1,18 +1,31 @@
 import { ReactElement, useEffect, useState } from 'react';
 
 import { TTodoItem } from '../../todo';
+import { TFilterType } from '../../App';
 import { data } from '../../mocks/data';
 import { TodoItem } from '../TodoItem';
 import { TodoAddForm } from '../TodoAddForm';
 
 export type TTodoList = {
+  filter: TFilterType;
   showAddForm: boolean;
   setShowAddForm: (showAddForm: boolean) => void;
 };
 
-export const TodoList = ({ showAddForm, setShowAddForm }: TTodoList): ReactElement => {
+export const TodoList = ({ filter, showAddForm, setShowAddForm }: TTodoList): ReactElement => {
   const [isLoading, setIsLoading] = useState(true);
   const [todos, setTodos] = useState<TTodoItem[]>(data);
+  const [filteredTodos, setFilteredTodos] = useState<TTodoItem[]>(todos);
+
+  useEffect(() => {
+    if (filter === 'On the Agenda') {
+      setFilteredTodos(todos.filter((todo) => !todo.completed));
+    } else if (filter === 'Completed') {
+      setFilteredTodos(todos.filter((todo) => todo.completed));
+    } else {
+      setFilteredTodos(todos);
+    }
+  }, [filter, todos]);
 
   useEffect(() => {
     const fakeLoader = setTimeout(() => {
@@ -55,7 +68,7 @@ export const TodoList = ({ showAddForm, setShowAddForm }: TTodoList): ReactEleme
     return (
       <>
         <div className="pb-16">
-          {todos.map((todo) => (
+          {filteredTodos.map((todo) => (
             <TodoItem
               key={todo.id}
               handleTodoDelete={handleTodoDelete}

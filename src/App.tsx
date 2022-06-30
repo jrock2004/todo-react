@@ -1,15 +1,17 @@
 import { ReactElement, useState } from 'react';
 import { PlusIcon } from '@heroicons/react/solid';
 import { TodoList } from './components/TodoList';
+import { Header } from './components/Header';
+
+export type TFilterType = 'On the Agenda' | 'Completed' | 'All';
 
 const App = (): ReactElement => {
   const [showAddForm, setShowAddForm] = useState(false);
+  const [filter, setFilter] = useState<TFilterType>('On the Agenda');
 
   return (
     <div className="flex h-full w-full">
-      <div className="w-8 bg-slate-600 p-6 text-white md:w-80 md:min-w-80">
-        <h1 className="text-4xl">My TODO&apos;s</h1>
-      </div>
+      <Header filter={filter} setFilter={setFilter} />
       <div className="flex flex-col">
         <div className="max-h-398 min-h-398 w-full">
           <img
@@ -20,7 +22,7 @@ const App = (): ReactElement => {
         </div>
         <div className="flex h-full justify-center bg-gray-100">
           <div className="-mt-20 w-3/4 self-start bg-white shadow-xl">
-            <TodoList setShowAddForm={setShowAddForm} showAddForm={showAddForm} />
+            <TodoList filter={filter} setShowAddForm={setShowAddForm} showAddForm={showAddForm} />
           </div>
           <div className="absolute bottom-8 right-8">
             <button
