@@ -34,8 +34,6 @@ export const handlers = [
   rest.post('/api/todos', (req, res, ctx) => {
     const body = req.body as TTodoItem;
 
-    console.log('body', body);
-
     const newTodos = [...todos];
 
     newTodos.push(body);
